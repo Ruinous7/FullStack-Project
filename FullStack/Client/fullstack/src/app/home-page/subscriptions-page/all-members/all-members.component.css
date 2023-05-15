@@ -1,0 +1,15 @@
+.basic-grid {
+  display: grid;
+  gap: 2rem;
+  row-gap: 2rem;
+  grid-template-columns: repeat(5,1fr) ;
+  justify-content: center;
+}
+
+.cardGrid {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

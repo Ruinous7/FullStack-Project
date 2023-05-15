@@ -1,0 +1,117 @@
+
+<!-- Div for displaying a login card, if the user backed out of the homepage -->
+
+<div *ngIf="isLoggedOut else loggedIn">
+  <nav class="navbar navbar-expand-lg bg-primary"  style="height: 72px">
+    <div id="loginNav" class="container-fluid">
+      <span class="navbar-brand">
+        <img src="../favicon.ico" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        A Movies Management Website - Final Fullstack Project
+      </span>
+      <span class="navbar-text">
+        - Powered By Angular , Made By Dor Mizrahi - בס"ד
+      </span>
+    </div>
+  </nav>
+  <br>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col">
+        <div  class="card text-center mb-3">
+          <div class="card-header">
+            Alert
+          </div>
+          <div class="card-body">
+            <p class="card-text">You are currently logged out of the system , to continue please log in</p>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" (click)="router.navigate(['login'])">Login</button><br>
+          </div>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Div for displaying a logged in homepage -->
+
+<ng-template #loggedIn>
+
+  <!-- Homepage Nav Bar -->
+
+  <nav class="navbar navbar-expand-lg bg-primary" style="height: 72px">
+    <div class="container-fluid" >
+      <span class="navbar-brand">
+        <img src="../favicon.ico" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        Hello {{loggedUser.fullName}}
+      </span>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div>
+            <button type="button" class="btn btn-info" (click)="toMovies()">Movies</button> &nbsp;
+            <button type="button" class="btn btn-info" (click)="toSubscriptions()">Subscriptions</button> &nbsp;
+        </div>
+      </div>
+      <form class="d-flex" role="search">
+        <button *ngIf="!homePage" type="button" class="btn btn-info" (click)="toHome()">Home</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-info" style="left:15px" (click)="logout()">Log Out</button>&nbsp;&nbsp;
+      </form>
+    </div>
+  </nav>
+
+  <!-- Homepage Welcome Card -->
+
+  <div class="container text-center" *ngIf="homePage">
+    <br>
+    <div class="row align-items-start">
+      <div class="col">
+      </div>
+      <div class="col">
+        <div class="card text-center" style="width: 100%; right:auto">
+          <div class="card-header">
+            Welcome to the Movies Management Website
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Please chose your desired action</h5>
+            <p class="card-text">You can manage the Movies , Subscriptions , and Users of our store</p>
+          </div>
+        </div>
+      </div>
+      <div class="col" >
+      </div>
+    </div>
+  </div>
+
+  <!-- Router for rendering the user's chosen menu page -->
+
+  <router-outlet></router-outlet>
+
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

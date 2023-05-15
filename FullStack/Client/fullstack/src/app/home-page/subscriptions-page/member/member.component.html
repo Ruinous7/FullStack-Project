@@ -1,0 +1,135 @@
+<div>
+  <!-- Members Information Card-->
+  <section class="cardGrid">
+    <!-- Members Header Section-->
+    <div class="card text-center" style="width: 241px;" *ngIf="memberActive else moviesActive">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="true" (click)="memberActive=true">Member</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="memberActive=false">Subscriptions</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div>
+          <h5 class="card-title">{{member.name}}</h5>
+          <hr>
+          <p class="card-text"><b>Email:</b><br>{{member.email}}</p>
+          <hr>
+          <p class="card-text"><b>City:</b><br>{{member.city}}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <!-- Edit/Delete Buttons-->
+        <a (click)="toEditMember(member.id)" class="card-link">Edit</a>
+        <a (click)="open(deleteContent)" class="card-link">Delete</a>
+      </div>
+    </div>
+    <!-- Movies Header Section-->
+    <ng-template #moviesActive>
+      <div class="card text-center" style="width:243px;">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link" (click)="memberActive=true">Member</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="true" (click)="memberActive=false">Subscriptions</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div>
+            <h5 class="card-title">Movies Watched</h5>
+            <hr>
+            <ul class="list-group list-group-flush">
+              <!-- Popover for displaying subscribed Movies -->
+              <div *ngFor="let m of this.movies.watched" id="info">
+                <ng-template #popContent >
+                  <img src={{m.mainData.image}} class="card-img-top" id="img"><br><hr>
+                  Premiered: <br><b>{{m.mainData.premiere}}</b><br><hr>
+                  Genres: <br><b>{{m.mainData.genres}}</b><br><hr>
+                  Watch Date: <br><b>{{m.subscriptionData.date}}</b><br><hr>
+                  <button type="button" class="btn btn-link btn-sm" (click)="toEditMovie(m.mainData.id,m.mainData)">Edit Movie</button>
+                </ng-template>
+                <ng-template #popTitle><b>{{m.mainData.name}}</b></ng-template>
+                <button type="button" class="btn btn-link" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                  {{m.mainData.name}}
+                </button>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          <!-- Popover for displaying available Movies -->
+          <ng-template #popContent2 >
+            <b>Available Movies:</b>
+            <select class="form-select" #movieInput  (change)="subscriptionObj.movieID=movieInput.value">
+              <option selected disabled>Choose Movie</option>
+              <div></div>
+              <option *ngFor="let u of this.movies.unWatched" value="{{u.id}}">{{u.name}}</option>
+            </select><hr>
+            <b>Date:</b><input type="date" class="form-control" placeholder="Enter Date" #dateInput (change)="subscriptionObj.date=dateInput.value"><hr>
+            <button type="button" class="btn btn-link" (click)="addSubscriptionFunc(fillIn,movieInput.value)">Subscribe</button>
+          </ng-template>
+          <ng-template #popTitle2>
+            Add Subscription
+          </ng-template>
+          <button type="button" class="btn btn-link" [autoClose]="'outside'" [ngbPopover]="popContent2" [popoverTitle]="popTitle2">
+            Add Subscription
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+</div>
+
+<!-- Delete Member Modal -->
+
+<ng-template #deleteContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Alert</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <p>
+          <strong>Are you sure you want to delete <span class="text-primary">{{member.name}}</span> as a customer?</strong>
+        </p>
+        <p>
+          All information associated to this Member will be permanently deleted.
+          <span class="text-danger">This operation can not be undone.</span>
+        </p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="toDeleteMember(member.id) + modal.close('Ok click')">Ok</button>
+  </div>
+</ng-template>
+
+<!--Fill In Modal -->
+
+<ng-template #fillIn let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Alert</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <p>
+          <strong> Please make sure you fill in the relevant information </strong>
+        </p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">OK</button>
+  </div>
+</ng-template>

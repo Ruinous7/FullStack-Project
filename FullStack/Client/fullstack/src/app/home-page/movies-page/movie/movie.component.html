@@ -1,0 +1,66 @@
+<!-- Display Variable for the Movies Search function-->
+<div [ngStyle]="{'display':movie.display ? 'block' : 'none'}">
+  <!-- Movies Information Card-->
+  <section class="cardGrid"></section>
+    <div class="card text-center" style="width: 16rem;">
+      <img src={{movie.image}} class="card-img-top" id="img">
+      <div class="card-body">
+        <h5 class="card-title">{{movie.name}}</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Premiered:<br>{{movie.premiere}}</li>
+          <li class="list-group-item">Genres:<br>{{movie.genres}}</li>
+          <li class="list-group-item">Subscribers:<br>
+            <div *ngFor="let s of subscribers">
+              <ng-template #popContent>Email: <b>{{s.mainData.email}}</b><br>City: <b>{{s.mainData.city}}</b><br>Date: <b>{{s.subscriptionData.date}}</b><button type="button" class="btn btn-link btn-sm" (click)="toEditMember(s.mainData.id,s.mainData)">Edit Member</button> </ng-template>
+              <ng-template #popTitle><b>{{s.mainData.name}}</b></ng-template>
+              <button type="button" class="btn btn-link" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                {{s.mainData.name}}
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <!-- Edit/Delete Buttons-->
+        <a (click)="toEditMovie(movie.id)" class="card-link">Edit</a>
+        <a (click)="open(deleteContent)" class="card-link">Delete</a>
+      </div>
+  </div>
+
+  <!-- to Delete Movie Modal -->
+
+  <ng-template #deleteContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Movie update</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <p>
+            <strong>Are you sure you want to delete <span class="text-primary">{{movie.name}}</span> from the store?</strong>
+          </p>
+          <p>
+            All information associated to this movie will be permanently deleted.
+            <span class="text-danger">This operation can not be undone.</span>
+          </p>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <!-- Approve/Dismiss Deletion Buttons-->
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="toDeleteMovie(movie.id) + modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>
+</div>
+
+
+
+
+
+
+
+
+
+

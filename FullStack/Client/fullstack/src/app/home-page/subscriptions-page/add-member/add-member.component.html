@@ -1,0 +1,47 @@
+<div  class="card text-center mb-3">
+  <div class="card-body">
+    <!-- Name Input -->
+    <div class="mb-3">
+      <h6><label for="nameInput" class="form-label">Member's Name:</label></h6>
+      <input type="text" class="form-control" id="nameInput" placeholder="Enter Name" #NameInput (keyup)="memberObj.name=NameInput.value">
+    </div>
+    <hr>
+    <!-- Email Input -->
+    <div class="mb-3">
+      <h6><label for="emailInput" class="form-label">Member's Email:</label></h6>
+      <input type="text" class="form-control" id="emailInput" placeholder="Enter Email" #EmailInput (keyup)="memberObj.email=EmailInput.value">
+    </div>
+    <hr>
+    <!-- City Input -->
+    <div class="mb-3">
+      <h6><label for="cityInput" class="form-label">Member's City:</label></h6>
+      <input type="text" class="form-control" id="cityInput" placeholder="Enter City" #CityInput (keyup)="memberObj.city=CityInput.value">
+    </div>
+    <hr>
+     <!-- Action Buttons -->
+    <button class="btn btn-primary" (click)="add(fillIn)">Add</button> &nbsp;
+    <button class="btn btn-danger" (click)="toMembers()" >Cancel</button>
+
+</div>
+
+<!-- Fill In Modal -->
+
+<ng-template #fillIn let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Alert</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <p>
+          <strong> Please make sure you fill in the relevant information </strong>
+        </p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">OK</button>
+  </div>
+</ng-template>
+
